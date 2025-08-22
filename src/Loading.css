@@ -1,0 +1,119 @@
+/* Loading.css */
+.loading-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-spinner {
+  text-align: center;
+  z-index: 2;
+  position: relative;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(46, 125, 50, 0.2);
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+.loading-text {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.loading-subtext {
+  font-size: 1.1rem;
+  color: var(--text-light);
+}
+
+.loading-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.decoration {
+  position: absolute;
+  font-size: 3rem;
+  animation: float 6s ease-in-out infinite;
+}
+
+.decoration.plant {
+  top: 20%;
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.decoration.water {
+  bottom: 25%;
+  right: 15%;
+  animation-delay: 1.5s;
+}
+
+.decoration.sun {
+  top: 15%;
+  right: 10%;
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+@media (max-width: 768px) {
+  .spinner {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .loading-text {
+    font-size: 1.5rem;
+  }
+  
+  .loading-subtext {
+    font-size: 1rem;
+  }
+  
+  .decoration {
+    font-size: 2rem;
+  }
+}

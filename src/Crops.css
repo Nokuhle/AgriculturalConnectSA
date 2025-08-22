@@ -1,0 +1,199 @@
+/* Crops.css */
+.crops-page {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.crops-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+
+.crops-list h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.crop-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.crop-card {
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 20px;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 2px solid transparent;
+}
+
+.crop-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  border-color: var(--primary-light);
+}
+
+.crop-card.selected {
+  border-color: var(--primary-color);
+  background: linear-gradient(135deg, #e8f5e9 0%, #ffffff 100%);
+}
+
+.crop-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.crop-card p {
+  color: var(--text-color);
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+.crop-details {
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 25px;
+}
+
+.crop-details h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.details-card {
+  background: #f8f9fa;
+  border-radius: var(--border-radius);
+  padding: 20px;
+}
+
+.details-card h3 {
+  color: var(--primary-color);
+  margin: 20px 0 15px;
+  font-size: 1.1rem;
+}
+
+.details-card h3:first-child {
+  margin-top: 0;
+}
+
+.details-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.details-card li {
+  padding: 8px 0;
+  color: var(--text-color);
+  position: relative;
+  padding-left: 25px;
+  line-height: 1.5;
+}
+
+.details-card li:before {
+  content: "✅";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 10px;
+}
+
+.pests-list,
+.diseases-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.pest-tag,
+.disease-tag {
+  background: #fff3e0;
+  color: #e65100;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.disease-tag {
+  background: #fbe9e7;
+  color: #d84315;
+}
+
+.add-crop-btn {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.select-crop-prompt {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-light);
+  font-size: 1.1rem;
+}
+
+.my-crops {
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 25px;
+}
+
+.my-crops h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.my-crops-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.my-crop-item {
+  background: #f8f9fa;
+  border-radius: var(--border-radius);
+  padding: 20px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.my-crop-item h3 {
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.my-crop-item p {
+  color: var(--text-color);
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .crops-page {
+    padding: 15px;
+  }
+  
+  .crop-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .my-crops-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .pests-list,
+  .diseases-list {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,209 @@
+/* Dashboard.css */
+.dashboard {
+  padding: 20px;
+}
+
+.dashboard-header {
+  margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+  color: var(--primary-color);
+  font-size: 2.2rem;
+  margin-bottom: 5px;
+}
+
+.dashboard-header p {
+  color: var(--text-light);
+  font-size: 1.1rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.dashboard-card {
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 20px;
+  transition: var(--transition);
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card h2 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+}
+
+.weather-card .weather-info {
+  text-align: center;
+}
+
+.weather-temp {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin: 10px 0;
+}
+
+.weather-condition {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  text-transform: capitalize;
+}
+
+.weather-details p {
+  margin: 5px 0;
+  color: var(--text-light);
+}
+
+.alerts-card .alert-item {
+  padding: 15px;
+  border-left: 4px solid;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  background-color: #fff8e1;
+}
+
+.alert-item.high {
+  border-left-color: var(--error-color);
+  background-color: #ffebee;
+}
+
+.alert-item.medium {
+  border-left-color: var(--warning-color);
+}
+
+.alert-item.low {
+  border-left-color: var(--secondary-color);
+}
+
+.alert-item h3 {
+  margin-bottom: 5px;
+  font-size: 1.1rem;
+}
+
+.alert-date {
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.view-all-btn {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.water-card {
+  text-align: center;
+}
+
+.score-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.water-savings {
+  margin-top: 20px;
+}
+
+.water-savings h3 {
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.savings {
+  color: var(--success-color);
+  font-weight: bold;
+}
+
+.crops-card .crops-list {
+  margin-bottom: 20px;
+}
+
+.crop-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.crop-item:last-child {
+  border-bottom: none;
+}
+
+.crop-name {
+  font-weight: 600;
+}
+
+.crop-status {
+  color: var(--success-color);
+  font-size: 0.9rem;
+}
+
+.analytics-card {
+  text-align: center;
+}
+
+.yield-prediction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.yield-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.yield-trend {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.yield-trend.increasing {
+  color: var(--success-color);
+}
+
+.yield-trend.decreasing {
+  color: var(--error-color);
+}
+
+.tips-card .tip-content {
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 1.8rem;
+  }
+}

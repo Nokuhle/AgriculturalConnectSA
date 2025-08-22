@@ -1,0 +1,229 @@
+/* WaterManagement.css */
+.water-page {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.water-overview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.water-score-card {
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 25px;
+  text-align: center;
+}
+
+.water-score-card h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.score-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score-circle-large {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.weather-impact {
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 25px;
+}
+
+.weather-impact h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.impact-card {
+  background: #f8f9fa;
+  border-radius: var(--border-radius);
+  padding: 20px;
+}
+
+.impact-card p {
+  color: var(--text-color);
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.crop-recommendations {
+  margin-bottom: 40px;
+}
+
+.crop-recommendations h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.recommendations-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.recommendation-card {
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 20px;
+  border-left: 4px solid var(--primary-color);
+  transition: var(--transition);
+}
+
+.recommendation-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.recommendation-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.recommendation-card p {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.savings-badge {
+  background: var(--primary-color);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.irrigation-methods {
+  margin-bottom: 40px;
+}
+
+.irrigation-methods h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.methods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.method-card {
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 20px;
+  text-align: center;
+  transition: var(--transition);
+  border-top: 4px solid var(--primary-color);
+}
+
+.method-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.method-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+.method-card p {
+  color: var(--text-color);
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.water-tips {
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 25px;
+}
+
+.water-tips h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.water-tips ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.water-tips li {
+  padding: 12px 0;
+  color: var(--text-color);
+  position: relative;
+  padding-left: 30px;
+  line-height: 1.6;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.water-tips li:last-child {
+  border-bottom: none;
+}
+
+.water-tips li:before {
+  content: "💧";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .water-page {
+    padding: 15px;
+  }
+  
+  .water-overview {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .recommendations-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .methods-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .score-circle-large {
+    width: 100px;
+    height: 100px;
+    font-size: 2rem;
+  }
+}

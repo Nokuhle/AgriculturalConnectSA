@@ -1,0 +1,228 @@
+/* Weather.css */
+.weather-page {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.region-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.region-selector label {
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.region-selector select {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  background: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.current-weather {
+  margin-bottom: 40px;
+}
+
+.current-weather h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.weather-card-large {
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.weather-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.temperature {
+  font-size: 4rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.conditions {
+  text-align: center;
+}
+
+.condition {
+  font-size: 1.5rem;
+  color: var(--text-color);
+  margin-bottom: 5px;
+  text-transform: capitalize;
+}
+
+.high-low {
+  color: var(--text-light);
+  font-size: 1.1rem;
+}
+
+.weather-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: var(--border-radius);
+}
+
+.label {
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.value {
+  font-weight: bold;
+  color: var(--primary-color);
+  font-size: 1.2rem;
+}
+
+.forecast {
+  margin-bottom: 40px;
+}
+
+.forecast h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.forecast-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.forecast-card {
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 20px;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.forecast-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.forecast-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.forecast-temp {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.forecast-condition {
+  color: var(--text-color);
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+
+.forecast-rain {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.seasonal-outlook {
+  margin-bottom: 30px;
+}
+
+.seasonal-outlook h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.outlook-card {
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 25px;
+}
+
+.outlook-card h3 {
+  color: var(--primary-color);
+  margin: 20px 0 10px;
+  font-size: 1.1rem;
+}
+
+.outlook-card h3:first-child {
+  margin-top: 0;
+}
+
+.outlook-card p {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .weather-page {
+    padding: 15px;
+  }
+  
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .weather-card-large {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .temperature {
+    font-size: 3rem;
+  }
+  
+  .forecast-cards {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+  
+  .detail {
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+  }
+}
