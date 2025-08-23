@@ -1,7 +1,11 @@
 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { auth, db } from "../firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import '../../src/Auth.css';
+
 
 const Login = ({ setUser }) => {
   const [formData, setFormData] = useState({
@@ -18,31 +22,36 @@ const Login = ({ setUser }) => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validateForm();
-    
-    if (Object.keys(validationErrors).length === 0) {
-      setIsLoading(true);
-      // Simulate API call
-      setTimeout(() => {
-        const userData = {
-          name: 'Test Farmer',
-          email: formData.email,
-          region: 'Western Cape',
-          farmSize: 50,
-          crops: ['Maize', 'Wheat'],
-          irrigationSystem: 'Drip',
-          experience: '5 years'
-        };
-        localStorage.setItem('agriAlertUser', JSON.stringify(userData));
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  const validationErrors = validateForm();
+  if (Object.keys(validationErrors).length === 0) {
+    setIsLoading(true);
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      const user = userCredential.user;
+
+      // Fetch extra data from Firestore
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        const userData = { uid: user.uid, ...userDoc.data() };
         setUser(userData);
-        setIsLoading(false);
-      }, 1500);
-    } else {
-      setErrors(validationErrors);
+        localStorage.setItem("agriAlertUser", JSON.stringify(userData));
+      }
+    } catch (error) {
+      console.error("Error logging in:", error.message);
+      setErrors({ firebase: error.message });
     }
-  };
+    setIsLoading(false);
+  } else {
+    setErrors(validationErrors);
+  }
+};
+
 
   const validateForm = () => {
     const errors = {};

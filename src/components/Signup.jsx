@@ -1,7 +1,9 @@
-// components/Signup.js
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '../contexts/UserContext';
+import { auth, db } from "../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import '../../src/Auth.css';
 
 const Signup = ({ setUser }) => {
@@ -25,29 +27,85 @@ const Signup = ({ setUser }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     
     if (Object.keys(validationErrors).length === 0) {
       setIsLoading(true);
-      // Simulate API call
-      setTimeout(() => {
+      setErrors({});
+      
+      try {
+        // Create user with Firebase Authentication
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+
+        const user = userCredential.user;
+        console.log("User created with UID:", user.uid);
+        
+        // Prepare user data for Firestore
         const userData = {
-          name: formData.name,
+          firstName: formData.name,
           email: formData.email,
-          region: formData.region,
+          FarmLocation: formData.region,
           farmSize: parseInt(formData.farmSize),
-          crops: [formData.mainCrop],
-          irrigationSystem: 'Traditional',
-          experience: 'New farmer'
+          primaryCrop: formData.mainCrop, // Changed from array to string if that's what you want
+          irrigationSystem: "Traditional",
+          experience: "New farmer",
+          createdAt: new Date()
         };
         
-        localStorage.setItem('agriAlertUser', JSON.stringify(userData));
-        updateUserProfile(userData);
-        setUser(userData);
-        setIsLoading(false);
-      }, 1500);
+        console.log("Attempting to store user data:", userData);
+        
+        // Store user data in Firestore with the user's UID as document ID
+        await setDoc(doc(db, "users", user.uid), userData);
+        
+        console.log("User data successfully stored in Firestore");
+
+        // Update user context
+        setUser({ 
+          uid: user.uid, 
+          email: user.email, 
+          name: formData.name,
+          region: formData.region,
+          farmSize: formData.farmSize,
+          mainCrop: formData.mainCrop
+        });
+        
+      } catch (error) {
+        console.error("Error signing up:", error);
+        
+        // Handle specific Firebase errors
+        let errorMessage = "An error occurred during signup. Please try again.";
+        
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            errorMessage = "This email is already registered. Please use a different email or sign in.";
+            break;
+          case 'auth/invalid-email':
+            errorMessage = "The email address is not valid.";
+            break;
+          case 'auth/operation-not-allowed':
+            errorMessage = "Email/password accounts are not enabled. Please contact support.";
+            break;
+          case 'auth/weak-password':
+            errorMessage = "The password is too weak. Please choose a stronger password.";
+            break;
+          // Firestore errors
+          case 'permission-denied':
+            errorMessage = "Permission denied. Please check your Firestore security rules.";
+            break;
+          default:
+            errorMessage = error.message || errorMessage;
+        }
+        
+        setErrors({ firebase: errorMessage });
+      }
+      
+      setIsLoading(false);
     } else {
       setErrors(validationErrors);
     }
@@ -94,6 +152,13 @@ const Signup = ({ setUser }) => {
           <h1>Join AgriAlert SA</h1>
           <p>Create your account to get personalized farming advice</p>
         </div>
+        
+        {/* Display Firebase errors */}
+        {errors.firebase && (
+          <div className="error-message firebase-error">
+            {errors.firebase}
+          </div>
+        )}
         
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">

@@ -13,6 +13,8 @@ import Navigation from './components/Navigation';
 import Loading from './components/Loading';
 import { UserProvider } from './contexts/UserContext';
 import { DataProvider } from './contexts/DataContext';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from './firebase'; 
 import './App.css';
 
 function App() {
@@ -20,12 +22,25 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate authentication check
-    const userData = localStorage.getItem('agriAlertUser');
-    if (userData) {
-      setUser(JSON.parse(userData));
-    }
-    setLoading(false);
+    // Always sign out on refresh for testing
+    signOut(auth).catch(() => {});
+
+    // Listen for Firebase authentication state changes
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (firebaseUser) {
+        const userData = {
+          uid: firebaseUser.uid,
+          email: firebaseUser.email,
+          displayName: firebaseUser.displayName,
+        };
+        setUser(userData);
+      } else {
+        setUser(null);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   if (loading) {
@@ -33,7 +48,7 @@ function App() {
   }
 
   return (
-    <UserProvider>
+    <UserProvider value={{ user, setUser }}>
       <DataProvider>
         <Router>
           <div className="App">
@@ -42,35 +57,39 @@ function App() {
               <Routes>
                 <Route 
                   path="/" 
-                  element={user ? <Dashboard /> : <Navigate to="/login" />} 
+                  element={user ? <Dashboard /> : <Navigate to="/login" replace />} 
                 />
                 <Route 
                   path="/login" 
-                  element={user ? <Navigate to="/" /> : <Login setUser={setUser} />} 
+                  element={user ? <Navigate to="/" replace /> : <Login />} 
                 />
                 <Route 
                   path="/signup" 
-                  element={user ? <Navigate to="/" /> : <Signup setUser={setUser} />} 
+                  element={user ? <Navigate to="/" replace /> : <Signup />} 
                 />
                 <Route 
                   path="/weather" 
-                  element={user ? <Weather /> : <Navigate to="/login" />} 
+                  element={user ? <Weather /> : <Navigate to="/login" replace />} 
                 />
                 <Route 
                   path="/crops" 
-                  element={user ? <Crops /> : <Navigate to="/login" />} 
+                  element={user ? <Crops /> : <Navigate to="/login" replace />} 
                 />
                 <Route 
                   path="/water" 
-                  element={user ? <WaterManagement /> : <Navigate to="/login" />} 
+                  element={user ? <WaterManagement /> : <Navigate to="/login" replace />} 
                 />
                 <Route 
                   path="/alerts" 
-                  element={user ? <Alerts /> : <Navigate to="/login" />} 
+                  element={user ? <Alerts /> : <Navigate to="/login" replace />} 
                 />
                 <Route 
                   path="/analytics" 
-                  element={user ? <Analytics /> : <Navigate to="/login" />} 
+                  element={user ? <Analytics /> : <Navigate to="/login" replace />} 
+                />
+                <Route 
+                  path="*" 
+                  element={user ? <Navigate to="/" replace /> : <Navigate to="/login" replace />} 
                 />
               </Routes>
             </div>
