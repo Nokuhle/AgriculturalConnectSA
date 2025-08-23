@@ -5,8 +5,11 @@ import { useUser } from '../contexts/UserContext';
 import '../../src/WaterManagement.css';
 
 const WaterManagement = () => {
-  const { waterData, currentRegion, currentWeather } = useData();
+  const { waterData, currentWeather } = useData();
   const { userProfile } = useUser();
+
+  // Use user's region instead of currentRegion from DataContext
+  const userRegion = userProfile?.FarmLocation || userProfile?.region;
 
   const calculateWaterSavings = () => {
     if (!waterData.length) return 0;
@@ -25,7 +28,7 @@ const WaterManagement = () => {
     <div className="water-page">
       <div className="page-header">
         <h1>Water Management</h1>
-        <p>Optimizing water usage for {currentRegion}</p>
+        <p>Optimizing water usage for {userRegion}</p>
       </div>
 
       <div className="water-overview">
@@ -52,16 +55,22 @@ const WaterManagement = () => {
       </div>
 
       <div className="crop-recommendations">
-        <h2>Water Recommendations by Crop</h2>
+        <h2>Water Recommendations for Your Crops</h2>
         {waterData.length > 0 ? (
           <div className="recommendations-list">
-            {waterData.map((item, index) => (
-              <div key={index} className="recommendation-card">
-                <h3>{item.crop}</h3>
-                <p>{item.recommendation}</p>
-                <div className="savings-badge">{item.savings}</div>
-              </div>
-            ))}
+            {waterData
+              .filter(item => 
+                userProfile?.primaryCrop === item.crop || 
+                (userProfile?.crops && userProfile.crops.includes(item.crop))
+              )
+              .map((item, index) => (
+                <div key={index} className="recommendation-card">
+                  <h3>{item.crop}</h3>
+                  <p>{item.recommendation}</p>
+                  <div className="savings-badge">{item.savings}</div>
+                </div>
+              ))
+            }
           </div>
         ) : (
           <p>No specific water recommendations available for your region at this time.</p>

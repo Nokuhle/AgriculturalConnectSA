@@ -1,10 +1,15 @@
 // components/Alerts.js
 import React from 'react';
 import { useData } from '../contexts/DataContext';
+import { useUser } from '../contexts/UserContext';
 import '../../src/Alerts.css';
 
 const Alerts = () => {
-  const { regionalAlerts, currentRegion } = useData();
+  const { regionalAlerts } = useData();
+  const { userProfile } = useUser();
+
+  // Use user's region instead of currentRegion from DataContext
+  const userRegion = userProfile?.FarmLocation || userProfile?.region;
 
   const getSeverityIcon = (severity) => {
     switch(severity) {
@@ -33,7 +38,7 @@ const Alerts = () => {
     <div className="alerts-page">
       <div className="page-header">
         <h1>Regional Alerts</h1>
-        <p>Important notifications for {currentRegion}</p>
+        <p>Important notifications for {userRegion}</p>
       </div>
 
       <div className="alerts-content">

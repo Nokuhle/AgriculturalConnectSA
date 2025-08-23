@@ -1,10 +1,15 @@
 // components/Analytics.js
 import React from 'react';
 import { useData } from '../contexts/DataContext';
+import { useUser } from '../contexts/UserContext';
 import '../../src/Analytics.css';
 
 const Analytics = () => {
-  const { analytics, currentRegion } = useData();
+  const { analytics } = useData();
+  const { userProfile } = useUser();
+
+  // Use user's region instead of currentRegion from DataContext
+  const userRegion = userProfile?.FarmLocation || userProfile?.region;
 
   if (!analytics) {
     return <div>Loading analytics data...</div>;
@@ -14,7 +19,7 @@ const Analytics = () => {
     <div className="analytics-page">
       <div className="page-header">
         <h1>Farm Analytics</h1>
-        <p>Performance insights for {currentRegion}</p>
+        <p>Performance insights for {userRegion}</p>
       </div>
 
       <div className="analytics-overview">

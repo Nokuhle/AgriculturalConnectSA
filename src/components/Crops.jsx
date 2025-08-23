@@ -5,35 +5,43 @@ import { useUser } from '../contexts/UserContext';
 import '../../src/Crops.css';
 
 const Crops = () => {
-  const { crops: allCrops, currentRegion } = useData();
+  const { crops: allCrops } = useData();
   const { userProfile, updateUserProfile } = useUser();
   const [selectedCrop, setSelectedCrop] = useState(null);
+
+  // Use user's region instead of currentRegion from DataContext
+  const userRegion = userProfile?.FarmLocation || userProfile?.region;
 
   const handleCropSelect = (crop) => {
     setSelectedCrop(crop);
   };
 
   const addCropToFarm = () => {
-    if (selectedCrop && !userProfile.crops.includes(selectedCrop.name)) {
-      const updatedCrops = [...userProfile.crops, selectedCrop.name];
-      updateUserProfile({ crops: updatedCrops });
+    if (selectedCrop) {
+      // Check if the crop is already in the user's crops array
+      const userCrops = userProfile.crops || [];
+      if (!userCrops.includes(selectedCrop.name)) {
+        const updatedCrops = [...userCrops, selectedCrop.name];
+        updateUserProfile({ crops: updatedCrops });
+      }
     }
   };
 
+  // Filter crops by user's region
   const regionalCrops = allCrops.filter(crop => 
-    crop.regions.includes(currentRegion)
+    crop.regions.includes(userRegion)
   );
 
   return (
     <div className="crops-page">
       <div className="page-header">
         <h1>Crop Management</h1>
-        <p>Information for crops in {currentRegion}</p>
+        <p>Information for crops in {userRegion}</p>
       </div>
 
       <div className="crops-content">
         <div className="crops-list">
-          <h2>Recommended Crops for {currentRegion}</h2>
+          <h2>Recommended Crops for {userRegion}</h2>
           <div className="crop-cards">
             {regionalCrops.map(crop => (
               <div 
@@ -76,7 +84,7 @@ const Crops = () => {
                   ))}
                 </div>
 
-                {!userProfile.crops.includes(selectedCrop.name) && (
+                {(!userProfile.crops || !userProfile.crops.includes(selectedCrop.name)) && (
                   <button className="btn-primary add-crop-btn" onClick={addCropToFarm}>
                     Add to My Crops
                   </button>
@@ -92,9 +100,16 @@ const Crops = () => {
 
         <div className="my-crops">
           <h2>My Crops</h2>
-          {userProfile.crops && userProfile.crops.length > 0 ? (
+          {userProfile?.primaryCrop || (userProfile?.crops && userProfile.crops.length > 0) ? (
             <div className="my-crops-list">
-              {userProfile.crops.map((cropName, index) => {
+              {userProfile.primaryCrop && (
+                <div className="my-crop-item">
+                  <h3>{userProfile.primaryCrop}</h3>
+                  <p>Primary Crop</p>
+                  <p>Status: Healthy</p>
+                </div>
+              )}
+              {userProfile.crops && userProfile.crops.map((cropName, index) => {
                 const crop = allCrops.find(c => c.name === cropName);
                 return crop ? (
                   <div key={index} className="my-crop-item">

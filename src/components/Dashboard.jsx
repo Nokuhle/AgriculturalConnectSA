@@ -6,13 +6,15 @@ import '../../src/Dashboard.css';
 
 const Dashboard = () => {
   const { userProfile } = useUser();
-  const { currentRegion, currentWeather, regionalAlerts, analytics } = useData();
+  const { currentWeather, regionalAlerts, analytics } = useData();
+
+  const userRegion = userProfile?.FarmLocation || userProfile?.region;
 
   return (
     <div className="dashboard">
       <div className="dashboard-header">
-        <h1>Welcome, {userProfile.name || 'Farmer'}!</h1>
-        <p>Your farm in {userProfile.region || currentRegion} | {userProfile.farmSize || '0'} hectares</p>
+        <h1>Welcome, {userProfile?.firstName || userProfile?.name || 'Farmer'}!</h1>
+        <p>Your farm in {userRegion} | {userProfile?.farmSize || '0'} hectares</p>
       </div>
 
       <div className="dashboard-grid">
@@ -66,9 +68,15 @@ const Dashboard = () => {
 
         <div className="dashboard-card crops-card">
           <h2>Your Crops</h2>
-          {userProfile.crops && userProfile.crops.length > 0 ? (
+          {userProfile?.primaryCrop || userProfile?.crops?.length > 0 ? (
             <div className="crops-list">
-              {userProfile.crops.map((crop, index) => (
+              {userProfile.primaryCrop && (
+                <div className="crop-item">
+                  <span className="crop-name">{userProfile.primaryCrop}</span>
+                  <span className="crop-status">Primary Crop</span>
+                </div>
+              )}
+              {userProfile.crops && userProfile.crops.map((crop, index) => (
                 <div key={index} className="crop-item">
                   <span className="crop-name">{crop}</span>
                   <span className="crop-status">Good Health</span>

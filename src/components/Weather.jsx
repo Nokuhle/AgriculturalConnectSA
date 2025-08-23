@@ -1,9 +1,14 @@
 import React from 'react';
 import { useData } from '../contexts/DataContext';
+import { useUser } from '../contexts/UserContext';
 import '../../src/Weather.css';
 
 const Weather = () => {
-  const { currentRegion, currentWeather, changeRegion, regions } = useData();
+  const { currentWeather, changeRegion, regions } = useData();
+  const { userProfile } = useUser();
+
+  // Use user's region instead of currentRegion from DataContext
+  const userRegion = userProfile?.FarmLocation || userProfile?.region;
 
   const handleRegionChange = (e) => {
     changeRegion(e.target.value);
@@ -21,7 +26,7 @@ const Weather = () => {
           <label htmlFor="region-select">Select Region: </label>
           <select 
             id="region-select" 
-            value={currentRegion} 
+            value={userRegion} 
             onChange={handleRegionChange}
           >
             {regions.map(region => (
@@ -32,7 +37,7 @@ const Weather = () => {
       </div>
 
       <div className="current-weather">
-        <h2>Current Conditions in {currentRegion}</h2>
+        <h2>Current Conditions in {userRegion}</h2>
         <div className="weather-card-large">
           <div className="weather-main">
             <div className="temperature">{currentWeather.temp}°C</div>
