@@ -12,7 +12,7 @@ import Navigation from './components/Navigation';
 import Loading from './components/Loading';
 import { UserProvider } from './contexts/UserContext';
 import { DataProvider } from './contexts/DataContext';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase'; 
 import './App.css';
 
@@ -21,9 +21,6 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Always sign out on refresh for testing
-    signOut(auth).catch(() => {});
-
     // Listen for Firebase authentication state changes
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
@@ -47,7 +44,7 @@ function App() {
   }
 
   return (
-    <UserProvider value={{ user, setUser }}>
+    <UserProvider>
       <DataProvider>
         <Router>
           <div className="App">
