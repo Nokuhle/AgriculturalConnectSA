@@ -1,4 +1,3 @@
-// components/Navigation.jsx
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../../src/Navigation.css';

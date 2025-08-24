@@ -1,4 +1,3 @@
-// components/Analytics.js
 import React from 'react';
 import { useData } from '../contexts/DataContext';
 import { useUser } from '../contexts/UserContext';

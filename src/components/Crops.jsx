@@ -1,4 +1,3 @@
-// components/Crops.js
 import React, { useState } from 'react';
 import { useData } from '../contexts/DataContext';
 import { useUser } from '../contexts/UserContext';

@@ -1,4 +1,3 @@
-// components/Dashboard.js
 import React from 'react';
 import { useUser } from '../contexts/UserContext';
 import { useData } from '../contexts/DataContext';

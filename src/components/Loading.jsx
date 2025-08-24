@@ -1,4 +1,3 @@
-// components/Loading.jsx
 import React from 'react';
 import '../../src/Loading.css';
 
